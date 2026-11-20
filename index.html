@@ -178,3 +178,102 @@ canvas{width:100%;height:auto;display:block}
         <div class="workout-footer-actions">
           <label class="field-label" for="workout-general-notes">Notas generales de la sesión (opcional)</label>
           <textarea id="workout-general-notes"
+          <button type="button" id="btn-save-workout" class="btn-primary">Guardar Entrenamiento Completo</button>
+        </div>
+      </section>
+      <section id="view-progreso" class="view">
+        <div class="sub-tabs"><button class="sub-tab active" data-subtab="evolucion">Evolución</button><button class="sub-tab" data-subtab="historial">Historial</button><button class="sub-tab" data-subtab="calendario">Calendario</button></div>
+        <div id="subtab-evolucion" class="subtab-panel active">
+          <div class="card">
+            <label class="field-label" for="progress-exercise-select">Ejercicio:</label>
+            <select id="progress-exercise-select" class="select-input"></select>
+            <div class="pr-banner"><div><span class="pr-label">Récord Personal</span><strong class="pr-value" id="pr-max-weight">-- kg</strong></div><div class="pr-right"><span class="pr-label">Conseguido el</span><strong class="pr-date" id="pr-max-date">--</strong></div></div>
+            <div class="chart-wrapper"><canvas id="exercise-chart" width="600" height="280"></canvas></div>
+            <p class="chart-hint" id="exercise-chart-hint"></p>
+            <div id="exercise-milestones" class="milestones-list"></div>
+          </div>
+          <div class="card"><h3>Volumen Semanal (kg)</h3><div class="chart-wrapper"><canvas id="volume-chart" width="600" height="250"></canvas></div></div>
+        </div>
+        <div id="subtab-historial" class="subtab-panel"><div id="workout-history-list" class="history-list"></div></div>
+        <div id="subtab-calendario" class="subtab-panel">
+          <div class="card">
+            <div class="cal-header"><button id="cal-prev" class="btn-icon-sm">&lt;</button><h3 id="cal-month-title">Mes</h3><button id="cal-next" class="btn-icon-sm">&gt;</button></div>
+            <div class="cal-weekdays"><span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+            <div id="cal-grid" class="cal-grid"></div>
+            <div class="cal-legend"><span><i class="dot dot-strength"></i> Fuerza</span><span><i class="dot dot-cardio"></i> Cardio</span></div>
+          </div>
+          <div id="cal-selected-details" class="card hidden"></div>
+        </div>
+      </section>
+      <section id="view-cardio" class="view">
+        <div class="card">
+          <h2>Registrar Cardio</h2>
+          <form id="cardio-form" class="form-grid">
+            <div class="form-group full"><label>Modalidad</label><select id="cardio-type" class="select-input" required><option value="Running">Running</option><option value="Bicicleta">Bicicleta</option><option value="Bicicleta estática">Bicicleta estática</option><option value="Elíptica">Elíptica</option><option value="Caminadora inclinada">Caminadora inclinada</option><option value="Escaladora">Escaladora</option></select></div>
+            <div class="form-group"><label>Fecha</label><input type="date" id="cardio-date" required /></div>
+            <div class="form-group"><label>Duración (min)</label><input type="number" id="cardio-duration" min="1" required /></div>
+            <div class="form-group"><label>Distancia (km)</label><input type="number" id="cardio-distance" step="0.01" /></div>
+            <div class="form-group"><label>Velocidad (km/h)</label><input type="number" id="cardio-speed" step="0.1" /></div>
+            <div class="form-group full"><label>FC media (ppm)</label><input type="number" id="cardio-hr" /></div>
+            <div class="form-group full"><label>Observaciones</label><input type="text" id="cardio-notes" /></div>
+            <button type="submit" class="btn-primary full">Guardar Cardio</button>
+          </form>
+        </div>
+        <div class="section-header"><h2>Historial de Cardio</h2></div>
+        <div id="cardio-history-list" class="history-list"></div>
+      </section>
+      <section id="view-medidas" class="view">
+        <div class="card">
+          <h2>Medidas Corporales</h2>
+          <form id="body-form" class="form-grid">
+            <div class="form-group full"><label>Fecha</label><input type="date" id="body-date" required /></div>
+            <div class="form-group"><label>Peso (kg)</label><input type="number" id="body-weight" step="0.1" required /></div>
+            <div class="form-group"><label>Abdomen (cm)</label><input type="number" id="body-waist" step="0.1" required /></div>
+            <button type="submit" class="btn-primary full">Guardar Medición</button>
+          </form>
+        </div>
+        <div class="card">
+          <h3>Evolución Física</h3>
+          <div class="body-kpis">
+            <div class="kpi-box"><span>Último Peso</span><strong id="kpi-latest-weight">-- kg</strong><small id="kpi-diff-weight">--</small></div>
+            <div class="kpi-box"><span>Abdomen</span><strong id="kpi-latest-waist">-- cm</strong><small id="kpi-diff-waist">--</small></div>
+          </div>
+          <div class="chart-wrapper"><canvas id="body-chart" width="600" height="260"></canvas></div>
+        </div>
+        <div id="body-history-list" class="history-list"></div>
+      </section>
+    </main>
+    <nav class="bottom-nav">
+      <button class="nav-item active" data-target="view-inicio"><span>Inicio</span></button>
+      <button class="nav-item" data-target="view-rutina"><span>Rutina</span></button>
+      <button class="nav-item" data-target="view-progreso"><span>Progreso</span></button>
+      <button class="nav-item" data-target="view-cardio"><span>Cardio</span></button>
+      <button class="nav-item" data-target="view-medidas"><span>Medidas</span></button>
+    </nav>
+  </div>
+  <div id="add-exercise-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header"><h3>Agregar Ejercicio</h3><button id="btn-close-add-ex" class="btn-icon-sm">✕</button></div>
+      <label class="field-label">Buscar en el catálogo del gimnasio:</label>
+      <input type="text" id="catalog-search-input" class="text-input" placeholder="Ej. Aductores, Abductores, Hack, Fondos..." />
+      <div id="catalog-list" class="catalog-list"></div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border-color)">
+        <label class="field-label">¿No está en la lista? Escribe el nombre personalizado:</label>
+        <div style="display:flex;gap:8px"><input type="text" id="custom-ex-name" class="text-input" placeholder="Nombre de la máquina..." /><button type="button" id="btn-add-custom-ex" class="btn-primary" style="margin-top:0;width:auto;padding:0 16px">Agregar</button></div>
+      </div>
+    </div>
+  </div>
+  <div id="backup-modal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header"><h3>Tus Datos y Seguridad</h3><button id="btn-close-backup" class="btn-icon-sm">✕</button></div>
+      <p class="muted-small">Todos tus entrenamientos se guardan localmente en tu Motorola Edge 50 Pro.</p>
+      <div class="backup-actions">
+        <button id="btn-export-data" class="btn-primary">Descargar Copia (.JSON)</button>
+        <label class="btn-secondary">Restaurar Copia (.JSON)<input type="file" id="input-import-data" accept=".json" hidden /></label>
+      </div>
+    </div>
+  </div>
+  <div id="toast" class="toast hidden"></div>
+  <script src="./app.js?v=2"></script>
+</body>
+</html>
