@@ -361,4 +361,5 @@ document.getElementById('btn-open-backup').addEventListener('click',()=>bkModal.
 document.getElementById('btn-close-backup').addEventListener('click',()=>bkModal.classList.add('hidden'));
 document.getElementById('btn-export-data').addEventListener('click',()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(appState,null,2)],{type:'application/json'}));a.download=`ANDRU_FITNESS_${getTodayISO()}.json`;a.click();});
 document.getElementById('input-import-data').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const imp=JSON.parse(ev.target.result);if(imp.workouts&&imp.cardio&&imp.body){appState=imp;saveDB();renderHome();renderWorkoutForm(currentDayId);bkModal.classList.add('hidden');showToast('Datos restaurados');}}catch{}};r.readAsText(f);});
-})();
+});
+
