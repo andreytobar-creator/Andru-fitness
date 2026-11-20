@@ -1,5 +1,5 @@
 (function(){
-const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="110" fill="#0B132B"/><text x="256" y="290" font-family="sans-serif" font-weight="900" font-size="140" fill="#10B981" text-anchor="middle">AF</text></svg>`;
+const svg=`...`;
 const ico='data:image/svg+xml;base64,'+btoa(svg);
 document.getElementById('dynamic-icon').href=ico;
 document.getElementById('dynamic-apple-icon').href=ico;
